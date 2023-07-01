@@ -19,23 +19,23 @@ import java.util.Date;
 public class MeteringDevice {
 
     @Id
-    @Column
-    @GeneratedValue
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
+    @Column(name = "date")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
-    @Column
+    @Column(name = "time")
     private String time;
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "full_name", columnDefinition = "TEXT")
     private String full_name;
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "dev_name", columnDefinition = "TEXT")
     private String dev_name;
-    @Column
+    @Column(name = "dev_meter")
     @NumberFormat(pattern = "# ### ### ###.###")
     private Double dev_meter;
-    @Column
+    @Column(name = "amount")
     @NumberFormat(pattern = "# ### ### ###.##")
     private Double amount;
 }

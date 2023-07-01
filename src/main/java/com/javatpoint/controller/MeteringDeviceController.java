@@ -39,18 +39,18 @@ public class MeteringDeviceController extends AbstractView {
         return meteringDeviceService.getMeteringById(idDevice);
     }
 
-    @GetMapping("/api/del/{id}")
-    private void delete(@PathVariable("id") int idDevice) {
-        meteringDeviceService.delete(idDevice);
-    }
-
     @PostMapping("/api/add")
     private MeteringDevice save(@RequestBody MeteringDevice meteringDevice) {
         meteringDeviceService.saveOrUpdate(meteringDevice);
         return meteringDevice;
     }
 
-    @PutMapping("/api/add")
+    @DeleteMapping("/api/del/{id}")
+    private void delete(@PathVariable("id") int id) {
+        meteringDeviceService.delete(id);
+    }
+
+    @PutMapping("/api/put")
     private MeteringDevice update(@RequestBody MeteringDevice meteringDevice) {
         meteringDeviceService.saveOrUpdate(meteringDevice);
         return meteringDevice;
@@ -59,14 +59,7 @@ public class MeteringDeviceController extends AbstractView {
     @GetMapping("api/upd/get/{id}")
     private String formMeteringDeviceList(@PathVariable("id") int idDevice) {
         meteringDevices = new LinkedList<>();
-        meteringDevices.add(new MeteringDevice(
-                meteringDeviceService.getMeteringById(idDevice).getId(),
-                meteringDeviceService.getMeteringById(idDevice).getDate(),
-                meteringDeviceService.getMeteringById(idDevice).getTime(),
-                meteringDeviceService.getMeteringById(idDevice).getFull_name(),
-                meteringDeviceService.getMeteringById(idDevice).getDev_name(),
-                meteringDeviceService.getMeteringById(idDevice).getDev_meter(),
-                meteringDeviceService.getMeteringById(idDevice).getAmount()));
+        meteringDevices.add(meteringDeviceService.getMeteringById(idDevice));
 
         return new RestTemplate().getForObject("http://localhost:" + localServerPort
                 + "/api/upd/get/report", String.class);
